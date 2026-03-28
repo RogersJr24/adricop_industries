@@ -5,14 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="api-base" content="">
-    <script src="/js/api-config.js"></script>
+    <script src="/js/env.js?v=5"></script>
+    <script src="/js/api-config.js?v=5"></script>
     <title>Orders</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/orders.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
+<body class="orders-page">
 
     <!-- NAV -->
     <nav>
@@ -76,7 +77,7 @@
         <div class="orders-header">
             <div>
                 <h2>My Orders</h2>
-                <p>Total Orders: <strong id="totalOrders">0</strong> &nbsp;|&nbsp; Portfolio Value: <strong id="totalValue">$0</strong></p>
+                <p class="orders-stats">Total Orders: <strong id="totalOrders">0</strong> <span class="orders-stats-sep">|</span> Portfolio Value: <strong id="totalValue">$0</strong></p>
             </div>
             <button class="btn btn-primary" onclick="openCreateModal()">+ New Order</button>
         </div>
@@ -245,6 +246,17 @@
         </div>
     </div>
 
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <a href="/">Home</a>
+            <span class="site-footer-dot">·</span>
+            <a href="/products">Our Cars</a>
+            <span class="site-footer-dot">·</span>
+            <a href="/contact">Contact</a>
+            <p class="site-footer-copy">&copy; KABUUBI Industries</p>
+        </div>
+    </footer>
 
     <script src="/js/orders.js"></script>
 

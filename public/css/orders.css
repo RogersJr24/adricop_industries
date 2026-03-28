@@ -85,11 +85,41 @@
 .orders-header h2 {
     font-size: 1.6rem;
     margin-bottom: 0.3rem;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 .orders-header p {
-    color: #666;
     font-size: 0.9rem;
+}
+
+/* High-contrast stats on gradient background */
+.orders-stats {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    margin-top: 0.65rem;
+    padding: 0.65rem 1.15rem;
+    background: rgba(13, 13, 13, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+}
+
+.orders-stats strong {
+    color: #7dd3fc;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.orders-stats-sep {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 300;
+    padding: 0 0.15rem;
 }
 
 /* ── Table ───────────────────────────────────── */
@@ -341,4 +371,15 @@
     max-height: 200px;
     object-fit: contain;
     transition: opacity 0.3s ease;
+}
+
+/* Footer + page layout */
+.orders-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.orders-page .site-footer {
+    margin-top: auto;
 }

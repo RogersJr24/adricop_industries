@@ -9,7 +9,8 @@
     "railway:login": "npx @railway/cli login",
     "railway:link": "npx @railway/cli link",
     "railway:deploy": "npx @railway/cli up",
-    "railway:logs": "npx @railway/cli logs"
+    "railway:logs": "npx @railway/cli logs",
+    "firebase:deploy": "npx firebase-tools deploy --only hosting"
   },
   "keywords": [],
   "author": "",

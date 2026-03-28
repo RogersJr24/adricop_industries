@@ -11,6 +11,7 @@ const app = express();
 // Server port
 const PORT = process.env.PORT || 3000;
 
+// Required when the site is on Firebase Hosting: set CLIENT_URL to your Firebase URLs (comma-separated), e.g. https://PROJECT.web.app,https://PROJECT.firebaseapp.com — optional if you only open the app on Railway.
 const clientOrigins = process.env.CLIENT_URL
     ? process.env.CLIENT_URL.split(",").map((s) => s.trim()).filter(Boolean)
     : null;

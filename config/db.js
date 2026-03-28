@@ -13,6 +13,26 @@ function isAivenHost(hostOrUrl) {
  * Aiven (and others) append ?ssl-mode=REQUIRED. mysql2 does not know that query
  * param and warns; SSL is applied separately via buildSslOptions().
  */
+/**
+ * If Railway keeps resetting DATABASE_URL to .../defaultdb, set MYSQL_DATABASE=adricop_industries
+ * (same value as in Workbench). This replaces the path in the URI without editing the synced URL.
+ */
+function applyDatabaseOverrideToUrl(urlStr) {
+    const override =
+        process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE || "";
+    const name = override.trim();
+    if (!name || !urlStr) {
+        return urlStr;
+    }
+    try {
+        const u = new URL(urlStr.replace(/^mysql2:\/\//, "mysql://"));
+        u.pathname = "/" + name;
+        return u.toString();
+    } catch {
+        return urlStr;
+    }
+}
+
 function sanitizeMysqlConnectionUrl(raw) {
     const normalized = raw.replace(/^mysql2:\/\//, "mysql://");
     try {
@@ -54,7 +74,8 @@ function getConnectionOptions() {
         process.env.AIVEN_MYSQL === "1";
 
     if (url && (url.startsWith("mysql://") || url.startsWith("mysql2://"))) {
-        const cleaned = sanitizeMysqlConnectionUrl(url);
+        let cleaned = sanitizeMysqlConnectionUrl(url);
+        cleaned = applyDatabaseOverrideToUrl(cleaned);
         const needSsl = forceSsl || isAivenHost(cleaned);
         if (needSsl) {
             return {
@@ -95,7 +116,11 @@ if (process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PROJECT_ID) {
     if (typeof opts === "string") {
         console.log("[db] using DATABASE_URL (mysql connection string)");
     } else if (isUrlObject) {
-        console.log("[db] using DATABASE_URL with SSL (e.g. Aiven)");
+        const o = process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE;
+        console.log(
+            "[db] using DATABASE_URL with SSL (e.g. Aiven)" +
+                (o && o.trim() ? `; database overridden by MYSQL_DATABASE=${o.trim()}` : "")
+        );
     } else {
         console.log(
             "[db] MySQL target:",

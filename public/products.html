@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="api-base" content="">
-    <script src="/js/api-config.js"></script>
+    <script src="/js/env.js?v=5"></script>
+    <script src="/js/api-config.js?v=5"></script>
     <title>Our Cars — KABUUBI Industries</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/products.css">
@@ -38,8 +39,28 @@
 
     <script>
 
-        fetch(apiUrl("/cars"))
-        .then(res => res.json())
+        function resolveRailsApiUrl(path) {
+            var p = path.charAt(0) === "/" ? path : "/" + path;
+            var b = (typeof window.RAILWAY_API_BASE === "string" ? window.RAILWAY_API_BASE : "").trim();
+            if (!b) {
+                b = (typeof window.__API_BASE__ === "string" ? window.__API_BASE__ : "").trim();
+            }
+            if (!b) {
+                return typeof apiUrl === "function" ? apiUrl(path) : p;
+            }
+            if (!/^https:\/\//i.test(b)) {
+                b = "https://" + b.replace(/^\/+/, "");
+            }
+            return b.replace(/\/$/, "") + p;
+        }
+
+        fetch(resolveRailsApiUrl("/cars"))
+        .then(function (res) {
+            if (!res.ok) {
+                throw new Error("HTTP " + res.status);
+            }
+            return res.json();
+        })
         .then(data => {
 
             const grid = document.getElementById("carsGrid");
@@ -70,9 +91,28 @@
 
             grid.innerHTML = html;
 
+        })
+        .catch(function (err) {
+            var tried = resolveRailsApiUrl("/cars");
+            document.getElementById("carsGrid").innerHTML =
+                "<p class='loading'>Could not load cars. Tried: <code>" +
+                String(tried).replace(/</g, "&lt;") +
+                "</code>. Set <code>RAILWAY_API_BASE</code> in <code>js/env.js</code>, redeploy Firebase, hard-refresh (Ctrl+Shift+R). Railway: <code>CLIENT_URL</code> = your <code>*.web.app</code> URLs. See console (F12).</p>";
+            console.error("[cars]", err, "URL:", tried);
         });
 
     </script>
+
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <a href="/">Home</a>
+        <span class="site-footer-dot">·</span>
+        <a href="/products">Our Cars</a>
+        <span class="site-footer-dot">·</span>
+        <a href="/contact">Contact</a>
+        <p class="site-footer-copy">&copy; KABUUBI Industries</p>
+    </div>
+</footer>
 
 </body>
 </html>

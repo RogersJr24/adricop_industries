@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="api-base" content="">
     <title>About</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 </head>
-<body>
+<body class="about-page">
 
   <!-- NAV -->
   <nav>
@@ -27,32 +26,45 @@
       </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="about-hero">
-    <p class="hero-sub">Engineer.<span class="cursor"></span></p>
-    <h1 class="hero-name">Adrian KABUUBI II</h1>
-    <p class="hero-desc">Visionary CEO Adrian leads with a passion for sustainable engineering, driving the company towards a zero-emission automotive future.</p>
-    <div class="scroll-icon"></div>
-  </section>
+  <main class="about-main">
+    <!-- HERO -->
+    <section class="about-hero about-hero-v2">
+      <div class="about-hero-card">
+        <p class="hero-sub">Engineer.<span class="cursor"></span></p>
+        <h1 class="hero-name">Adrian KABUUBI II</h1>
+        <p class="hero-desc">Visionary CEO Adrian leads with a passion for sustainable engineering, driving the company towards a zero-emission automotive future.</p>
+        <div class="scroll-icon" aria-hidden="true"></div>
+      </div>
+    </section>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="about-img-wrap">
-      <!--<img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=500&q=80" alt="Jason Doe"/>-->
-      <img src="images/about.jpeg" alt="Jason Doe"/>
-    </div>
-    <div class="about-text">
-      <h2 class="about-title">EV<br>Engineer</h2>
-      <p>The electric vehicle (EV) manufacturing industry is experiencing explosive growth and rapid technological transformation. Driven by global climate initiatives, companies are investing heavily in sustainable mobility. This highly competitive sector constantly innovates in battery efficiency, charging infrastructure, and autonomous driving. As consumer demand shifts toward eco-friendly alternatives, automakers are reshaping the automotive landscape. However, they must navigate complex critical mineral supply chains while lowering production costs to reach mass markets.</p>
-      <a href="#" class="btn-cv">
-        Download CV
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      </a>
-    </div>
-  </section>
+    <!-- ABOUT -->
+    <section class="about-panel">
+      <div class="about-panel-inner">
+        <div class="about-img-wrap">
+          <img src="images/about.jpeg" alt="Adrian KABUUBI II"/>
+        </div>
+        <div class="about-text">
+          <h2 class="about-title">EV<br>Engineer</h2>
+          <p>The electric vehicle (EV) manufacturing industry is experiencing explosive growth and rapid technological transformation. Driven by global climate initiatives, companies are investing heavily in sustainable mobility. This highly competitive sector constantly innovates in battery efficiency, charging infrastructure, and autonomous driving. As consumer demand shifts toward eco-friendly alternatives, automakers are reshaping the automotive landscape. However, they must navigate complex critical mineral supply chains while lowering production costs to reach mass markets.</p>
+          <a href="#" class="btn-cv">
+            Download CV
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="site-footer-inner">
+          <a href="/">Home</a>
+          <span class="site-footer-dot">·</span>
+          <a href="/products">Our Cars</a>
+          <span class="site-footer-dot">·</span>
+          <a href="/contact">Contact</a>
+          <p class="site-footer-copy">&copy; KABUUBI Industries</p>
+      </div>
+  </footer>
 
 </body>
 </html>
-
-
-
