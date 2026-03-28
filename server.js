@@ -27,6 +27,10 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.get("/health", (req, res) => {
+    res.status(200).type("text/plain").send("ok");
+});
+
 
 // ─── AUTH ────────────────────────────────────────
 
