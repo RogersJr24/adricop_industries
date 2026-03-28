@@ -1,28 +1,58 @@
 // Import mysql2 package
 const mysql = require("mysql2");
 
+function isAivenHost(hostOrUrl) {
+    if (!hostOrUrl) {
+        return false;
+    }
+    const s = String(hostOrUrl);
+    return s.includes("aivencloud.com") || s.includes("aivencloud.net");
+}
+
+function buildSslOptions() {
+    // Optional: paste Aiven CA PEM into MYSQL_SSL_CA (full certificate text)
+    if (process.env.MYSQL_SSL_CA && process.env.MYSQL_SSL_CA.trim().length > 0) {
+        return {
+            ca: process.env.MYSQL_SSL_CA,
+            rejectUnauthorized: true
+        };
+    }
+    // Aiven and most cloud MySQL require TLS; without a CA bundle, this is the usual approach
+    return { rejectUnauthorized: false };
+}
+
 function getConnectionOptions() {
-    // Railway / many hosts provide a single URL (check several common names)
     const url =
         process.env.DATABASE_URL ||
         process.env.MYSQL_URL ||
         process.env.MYSQL_PRIVATE_URL ||
         process.env.MYSQL_PUBLIC_URL;
 
-    if (url && (url.startsWith("mysql://") || url.startsWith("mysql2://"))) {
-        return url;
-    }
+    const forceSsl =
+        process.env.MYSQL_SSL === "true" ||
+        process.env.MYSQL_SSL === "1" ||
+        process.env.AIVEN_MYSQL === "1";
 
-    const useSsl =
-        process.env.MYSQL_SSL === "true" || process.env.MYSQL_SSL === "1";
+    if (url && (url.startsWith("mysql://") || url.startsWith("mysql2://"))) {
+        const needSsl = forceSsl || isAivenHost(url);
+        if (needSsl) {
+            return {
+                uri: url.replace(/^mysql2:\/\//, "mysql://"),
+                ssl: buildSslOptions()
+            };
+        }
+        return url.replace(/^mysql2:\/\//, "mysql://");
+    }
 
     const host =
         process.env.MYSQLHOST ||
         process.env.MYSQL_HOST ||
         "127.0.0.1";
 
-    // Use 127.0.0.1 instead of "localhost" so Node does not prefer IPv6 ::1 (fixes local/XAMPP oddities)
     const resolvedHost = host === "localhost" ? "127.0.0.1" : host;
+
+    const needSsl =
+        forceSsl || isAivenHost(resolvedHost);
 
     return {
         host: resolvedHost,
@@ -33,16 +63,18 @@ function getConnectionOptions() {
             process.env.MYSQLDATABASE ||
             process.env.MYSQL_DATABASE ||
             "adricop_industries",
-        ssl: useSsl ? { rejectUnauthorized: false } : false
+        ssl: needSsl ? buildSslOptions() : false
     };
 }
 
 const opts = getConnectionOptions();
-const isUrl = typeof opts === "string";
+const isUrlObject = typeof opts === "object" && opts !== null && Boolean(opts.uri);
 
 if (process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PROJECT_ID) {
-    if (isUrl) {
-        console.log("[db] using DATABASE_URL / MYSQL_* URL for MySQL");
+    if (typeof opts === "string") {
+        console.log("[db] using DATABASE_URL (mysql connection string)");
+    } else if (isUrlObject) {
+        console.log("[db] using DATABASE_URL with SSL (e.g. Aiven)");
     } else {
         console.log(
             "[db] MySQL target:",
@@ -52,16 +84,16 @@ if (process.env.RAILWAY_ENVIRONMENT || process.env.RAILWAY_PROJECT_ID) {
         );
     }
     if (
-        !isUrl &&
+        typeof opts === "object" &&
+        opts.host &&
         (opts.host === "127.0.0.1" || opts.host === "localhost") &&
         !process.env.MYSQLHOST &&
-        !process.env.MYSQL_HOST
+        !process.env.MYSQL_HOST &&
+        !process.env.DATABASE_URL &&
+        !process.env.MYSQL_URL
     ) {
         console.error(
-            "[db] No MYSQLHOST / MYSQL_HOST / DATABASE_URL set. The app is trying localhost, which fails on Railway."
-        );
-        console.error(
-            "[db] Fix: Railway → your MySQL service → copy variables, then on your web service → Variables → New variable → Reference → pick MySQL and add MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT (or paste MYSQL_URL / DATABASE_URL)."
+            "[db] No DATABASE_URL / MYSQL_HOST set. The app is trying localhost, which fails on Railway."
         );
     }
 }
