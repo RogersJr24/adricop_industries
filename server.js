@@ -291,7 +291,9 @@ app.get("/products", (req, res) => {
 
 
 // ─── START SERVER ────────────────────────────────
+// Bind to 0.0.0.0 so Railway / Docker / cloud hosts can route traffic to the container.
+const HOST = process.env.HOST || "0.0.0.0";
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`[adricop] server listening on http://${HOST}:${PORT}`);
 });
