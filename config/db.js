@@ -9,6 +9,26 @@ function isAivenHost(hostOrUrl) {
     return s.includes("aivencloud.com") || s.includes("aivencloud.net");
 }
 
+/**
+ * Aiven (and others) append ?ssl-mode=REQUIRED. mysql2 does not know that query
+ * param and warns; SSL is applied separately via buildSslOptions().
+ */
+function sanitizeMysqlConnectionUrl(raw) {
+    const normalized = raw.replace(/^mysql2:\/\//, "mysql://");
+    try {
+        const u = new URL(normalized);
+        u.searchParams.delete("ssl-mode");
+        u.searchParams.delete("sslMode");
+        let out = u.toString();
+        if (out.endsWith("?")) {
+            out = out.slice(0, -1);
+        }
+        return out;
+    } catch {
+        return normalized.replace(/[?&]ssl-mode=[^&]*/gi, "").replace(/\?$/, "");
+    }
+}
+
 function buildSslOptions() {
     // Optional: paste Aiven CA PEM into MYSQL_SSL_CA (full certificate text)
     if (process.env.MYSQL_SSL_CA && process.env.MYSQL_SSL_CA.trim().length > 0) {
@@ -34,14 +54,15 @@ function getConnectionOptions() {
         process.env.AIVEN_MYSQL === "1";
 
     if (url && (url.startsWith("mysql://") || url.startsWith("mysql2://"))) {
-        const needSsl = forceSsl || isAivenHost(url);
+        const cleaned = sanitizeMysqlConnectionUrl(url);
+        const needSsl = forceSsl || isAivenHost(cleaned);
         if (needSsl) {
             return {
-                uri: url.replace(/^mysql2:\/\//, "mysql://"),
+                uri: cleaned,
                 ssl: buildSslOptions()
             };
         }
-        return url.replace(/^mysql2:\/\//, "mysql://");
+        return cleaned;
     }
 
     const host =
