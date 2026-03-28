@@ -1,0 +1,579 @@
+
+/* Index css Start */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #e63329;
+      --dark: #0d0d0d;
+
+      /*--red: #e8392a;
+      --bg: #e8eaec;
+      --dark: #1a1a2e;
+      --text: #333;
+      --muted: #666;*/
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      /*background: var(--dark);*/
+      /*background: var(--bg);*/
+      background:
+        /*linear-gradient(100deg, rgba(10,10,10,.88) 36%, rgba(10,10,10,.35) 68%, rgba(10,10,10,.72) 100%),*/
+        linear-gradient(100deg, rgba(14,120,180,.88) 36%, rgba(100,200,240,.35) 68%, rgba(14,100,160,.72) 100%);
+        /*url("/images/home.png");*/
+      /*color: #fff;8/
+      color: var(--text);
+      overflow: hidden;
+
+      /*font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);*/
+    }
+
+
+    /* ── FULL-SCREEN HERO ── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Background photo */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        /*linear-gradient(100deg, rgba(10,10,10,.88) 36%, rgba(10,10,10,.35) 68%, rgba(10,10,10,.72) 100%),*/
+        /*url('https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=500&q=80') center/cover no-repeat;*/
+        linear-gradient(100deg, rgba(10,10,10,.88) 36%, rgba(10,10,10,.35) 68%, rgba(10,10,10,.72) 100%),
+        url("/images/home.png");
+        
+      animation: slowzoom 16s ease-out forwards;
+    }
+    @keyframes slowzoom {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.00); }
+    }
+
+    /* Vertical red accent line */
+    .hero-line {
+      position: absolute;
+      top: 0;
+      right: 17%;
+      width: 2px;
+      height: 100%;
+      background: var(--red);
+      opacity: .75;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 52px;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: .01em;
+    }
+    .logo span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      text-decoration: none;
+      transition: color .25s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--red);
+      transition: width .3s ease;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-hire {
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,.5);
+      padding: 11px 28px;
+      text-decoration: none;
+      transition: background .25s, border-color .25s;
+    }
+    .nav-hire:hover { background: var(--red); border-color: var(--red); }
+
+    /* ── HERO BODY ── */
+    .hero-body {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 0 52px;
+      animation: rise .9s .15s both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-text { max-width: 640px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .68rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 34px; height: 1.5px;
+      background: var(--red);
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 9.5vw, 8rem);
+      font-weight: 900;
+      line-height: .95;
+      color: #fff;
+      letter-spacing: -.01em;
+    }
+    h1 .name {
+      color: var(--red);
+      font-style: italic;
+      display: block;
+    }
+
+    .tagline {
+      margin-top: 28px;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,.52);
+      max-width: 400px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 44px;
+      flex-wrap: wrap;
+    }
+
+    .btn-red {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 18px 42px;
+      text-decoration: none;
+      transition: background .25s, transform .2s;
+    }
+    .btn-red:hover { background: #c42920; transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 17px 36px;
+      border: 1.5px solid rgba(255,255,255,.32);
+      text-decoration: none;
+      transition: border-color .25s, transform .2s;
+    }
+    .btn-ghost:hover { border-color: #fff; transform: translateY(-2px); }
+    .btn-ghost svg { opacity: .7; }
+
+    /* ── SOCIAL SIDEBAR ── */
+    .social-sidebar {
+      position: absolute;
+      z-index: 10;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      animation: rise 1s .5s both;
+    }
+    .social-sidebar::before {
+      content: '';
+      display: block;
+      width: 1px; height: 70px;
+      background: rgba(255,255,255,.2);
+    }
+    .social-sidebar::after {
+      content: '';
+      display: block;
+      width: 1px; height: 70px;
+      background: rgba(255,255,255,.2);
+    }
+    .social-sidebar a {
+      writing-mode: vertical-rl;
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.38);
+      text-decoration: none;
+      transition: color .25s;
+    }
+    .social-sidebar a:hover { color: var(--red); }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 0 52px 30px;
+      font-size: .65rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      animation: rise 1s .8s both;
+    }
+    .pulse-dot {
+      width: 10px; height: 10px;
+      border: 1.5px solid var(--red);
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 1.8s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.2; transform:scale(1.7); }
+    }
+
+/* Index CSS End */
+
+/* About CSS Start */
+
+    /* ── HERO SECTION ── */
+    .about-hero {
+      text-align: center;
+      /*padding: 70px 20px 60px;*/
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+
+    .hero-sub .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--dark);
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .8s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-name {
+      font-size: clamp(2.6rem, 6vw, 4rem);
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero-desc {
+      font-size: .88rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 360px;
+      margin: 0 auto 28px;
+    }
+
+    /* scroll mouse icon */
+    .scroll-icon {
+      display: inline-block;
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--muted);
+      border-radius: 12px;
+      position: relative;
+      margin-top: 8px;
+    }
+    .scroll-icon::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 7px;
+      background: var(--muted);
+      border-radius: 2px;
+      animation: scroll 1.6s infinite;
+    }
+    @keyframes scroll {
+      0%   { top: 6px; opacity: 1; }
+      100% { top: 20px; opacity: 0; }
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about {
+      display: flex;
+      align-items: flex-start;
+      gap: 60px;
+      /*padding: 60px 80px;*/
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-img-wrap {
+      flex-shrink: 0;
+      width: 240px;
+    }
+    .about-img-wrap img {
+      width: 240px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      display: block;
+    }
+
+    .about-text { padding-top: 10px; }
+
+    .about-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      font-size: .88rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.70;
+      margin-bottom: 16px;
+    }
+
+    .btn-cv {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      background: var(--red);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 11px 26px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background .2s;
+    }
+    .btn-cv:hover { background: #c42920; }
+    .btn-cv svg { width: 13px; height: 13px; }
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.hero{
+flex-direction:column;
+text-align:center;
+padding:40px;
+}
+
+.hero-image img{
+margin-top:40px;
+width:320px;
+}
+
+}
+
+/* About CSS End */
+
+/* Contact CSS Start */
+
+/* Container */
+.container {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+/* Contact form */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+}
+
+input, textarea {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    form {
+        width: 90%;
+    }
+}
+
+.contact-container{
+display:flex;
+gap:40px;
+padding:30px;
+}
+
+.form-section{
+flex:1;
+}
+
+.messages-section{
+flex:1;
+background:#f4f4f4;
+padding:20px;
+border-radius:5px;
+max-height:400px;
+overflow-y:auto;
+}
+
+.message{
+border-bottom:1px solid #ddd;
+padding:10px 0;
+}
+
+#successMessage{
+color:green;
+margin-top:10px;
+} 
+
+/* SOCIAL MEDIA CONTAINER */
+
+.social-container{
+text-align:center;
+margin-top:30px;
+}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:25px;
+margin-top:10px;
+}
+
+/* ICON STYLE */
+
+.social-icons a{
+font-size:30px;
+text-decoration:none;
+transition:0.3s;
+}
+
+/* COLORS */
+
+.twitter{
+color:#1DA1F2;
+}
+
+.facebook{
+color:#1877F2;
+}
+
+.instagram{
+color:#E1306C;
+}
+
+.linkedin{
+color:#0A66C2;
+}
+
+/* HOVER EFFECT */
+
+.social-icons a:hover{
+transform:scale(1.3);
+}
+
+/* Contact CSS End */
+
+/* Orders CSS Start */
+
+/* Orders CSS End */

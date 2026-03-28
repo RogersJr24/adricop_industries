@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="api-base" content="">
+    <script src="/js/api-config.js"></script>
+    <title>Our Cars — KABUUBI Industries</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/products.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="logo">KABUUBI Industries<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/products">Our Cars</a></li>
+            <li><a href="/myorders">Order Your EV</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+        <a href="/myorders" class="nav-hire">Order Now</a>
+    </nav>
+
+    <div class="products-header">
+        <h1>Our Electric Vehicles</h1>
+        <p>Built for the future. Designed for you.</p>
+    </div>
+
+    <div class="cars-grid" id="carsGrid">
+        <p class="loading">Loading cars...</p>
+    </div>
+
+    <script>
+
+        fetch(apiUrl("/cars"))
+        .then(res => res.json())
+        .then(data => {
+
+            const grid = document.getElementById("carsGrid");
+
+            if (data.length === 0) {
+                grid.innerHTML = "<p class='loading'>No cars found.</p>";
+                return;
+            }
+
+            let html = "";
+
+            data.forEach(function (car) {
+
+                html += `
+                    <div class="car-card">
+                        <div class="car-image-wrap">
+                            <img src="${car.image_path}" alt="${car.model_name}" />
+                        </div>
+                        <div class="car-info">
+                            <h3>${car.model_name}</h3>
+                            <p>${car.description || "Description coming soon."}</p>
+                            <a href="/myorders" class="car-btn">Order Now</a>
+                        </div>
+                    </div>
+                `;
+
+            });
+
+            grid.innerHTML = html;
+
+        });
+
+    </script>
+
+</body>
+</html>

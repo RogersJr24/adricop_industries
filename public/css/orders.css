@@ -1,0 +1,344 @@
+/* ── Orders Page ─────────────────────────────── */
+
+#loginScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem;
+}
+
+.auth-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 0.6rem;
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #999;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.auth-tab.active {
+    color: #000;
+    border-bottom-color: #000;
+}
+
+.auth-card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.auth-card input:focus {
+    border-color: #000;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.85rem;
+    min-height: 1rem;
+}
+
+/* ── Orders Screen ───────────────────────────── */
+
+#ordersScreen {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.orders-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+}
+
+.orders-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ── Table ───────────────────────────────────── */
+
+#ordersTableWrap table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#ordersTableWrap th {
+    background: #f5f5f5;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+}
+
+#ordersTableWrap td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+}
+
+#ordersTableWrap tr:last-child td {
+    border-bottom: none;
+}
+
+#ordersTableWrap tr:hover td {
+    background: #fafafa;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.empty-state p { margin-bottom: 1rem; }
+
+/* ── Status badges ───────────────────────────── */
+
+.status-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.status-Pending    { background: #fff3e0; color: #e65100; }
+.status-Confirmed  { background: #e3f2fd; color: #1565c0; }
+.status-Delivered  { background: #e8f5e9; color: #2e7d32; }
+.status-Cancelled  { background: #ffebee; color: #c62828; }
+
+/* ── Buttons ─────────────────────────────────── */
+
+.btn {
+    padding: 0.5rem 1.1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary { background: #000; color: #fff; }
+.btn-primary:hover { background: #333; }
+
+.btn-warn    { background: #ff9800; color: #fff; }
+.btn-warn:hover { background: #f57c00; }
+
+.btn-danger  { background: #e53935; color: #fff; }
+.btn-danger:hover { background: #c62828; }
+
+.btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; margin-right: 0.2rem; }
+
+.btn-close {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.btn-close:hover { border-color: red; color: red; }
+
+/* ── Overlay & Modal ─────────────────────────── */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 1rem;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-sm { max-width: 400px; }
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: #fff;
+}
+
+.modal-header h3 { font-size: 1.1rem; }
+
+.modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.modal-body label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: -0.4rem;
+}
+
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.modal-body input:focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+    border-color: #000;
+}
+
+.modal-body textarea { min-height: 80px; resize: vertical; }
+
+.modal-body p { font-size: 0.95rem; line-height: 1.6; }
+.modal-body p strong { color: #000; }
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+/* ── Extras checkboxes ───────────────────────── */
+
+.extras-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.extras-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #333;
+}
+
+.extras-group label:hover { border-color: #000; }
+
+/* ── Price preview ───────────────────────────── */
+
+.price-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.price-preview span { font-size: 0.9rem; color: #555; }
+.price-preview strong { font-size: 1.2rem; color: #000; }
+
+/* ── Nav right ───────────────────────────────── */
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#userGreeting { font-size: 0.9rem; color: #555; }
+#userGreeting strong { color: #000; }
+
+
+/* Car images */
+
+#carImageWrap {
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    text-align: center;
+    padding: 1rem;
+}
+
+#carImage {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
