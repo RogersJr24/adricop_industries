@@ -290,6 +290,10 @@ app.get("/products", (req, res) => {
     res.sendFile(__dirname + "/public/products.html");
 });
 
+app.get("/dashboard", (req, res) => {
+    res.sendFile(__dirname + "/public/dashboard.html");
+});
+
 
 // ─── START SERVER ────────────────────────────────
 // Bind to 0.0.0.0 so Railway / Docker / cloud hosts can route traffic to the container.

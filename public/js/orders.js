@@ -560,3 +560,10 @@ function loadCars() {
     });
 
 }
+
+// Show dashboard link only for admin
+const dashLink = document.getElementById("dashboardLink");
+if (dashLink) {
+    dashLink.style.display =
+        currentUser && currentUser.full_name === "admin" ? "list-item" : "none";
+}

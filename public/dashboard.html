@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="api-base" content="">
+    <script src="/js/env.js?v=5"></script>
+    <script src="/js/api-config.js?v=5"></script>
+    <title>Admin Dashboard — KABUUBI Industries</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/orders.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="orders-page">
+
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="logo">KABUUBI Industries<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/products">Our Cars</a></li>
+            <li><a href="/myorders">Order Your EV</a></li>
+            <li><a href="/dashboard" aria-current="page">Dashboard</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <span id="userGreeting" style="display:none"></span>
+            <button id="logoutBtn" class="nav-hire" style="display:none; border:none; cursor:pointer;">Logout</button>
+        </div>
+    </nav>
+
+
+    <!-- ═══════════════════════════════
+         ACCESS DENIED SCREEN
+    ════════════════════════════════ -->
+    <div id="accessDenied" style="display:none;">
+        <div class="denied-wrap">
+            <div class="denied-icon"><i class="fas fa-lock"></i></div>
+            <h2>Access Denied</h2>
+            <p>This page is only accessible to administrators.</p>
+            <a href="/myorders" class="btn btn-primary">Go to My Orders</a>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════
+         DASHBOARD SCREEN
+    ════════════════════════════════ -->
+    <div id="dashboardScreen" style="display:none;">
+
+        <div class="dash-header">
+            <div>
+                <p class="dash-eyebrow">Admin Panel</p>
+                <h2>Dashboard <span>&amp;</span> Reports</h2>
+            </div>
+            <a href="/myorders" class="btn btn-primary">View All Orders</a>
+        </div>
+
+        <!-- ── STAT CARDS ── -->
+        <div class="stat-cards">
+
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fas fa-shopping-cart"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Orders</p>
+                    <h3 class="stat-val" id="statTotal">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Pending</p>
+                    <h3 class="stat-val" id="statPending">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Confirmed</p>
+                    <h3 class="stat-val" id="statConfirmed">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-industry"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">In Production</p>
+                    <h3 class="stat-val" id="statProduction">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-truck"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Delivered</p>
+                    <h3 class="stat-val" id="statDelivered">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon dark"><i class="fas fa-ban"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Cancelled</p>
+                    <h3 class="stat-val" id="statCancelled">0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card wide">
+                <div class="stat-icon green"><i class="fas fa-dollar-sign"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Revenue</p>
+                    <h3 class="stat-val" id="statRevenue">$0</h3>
+                </div>
+            </div>
+
+            <div class="stat-card wide">
+                <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Customers</p>
+                    <h3 class="stat-val" id="statCustomers">0</h3>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ── CHARTS ROW ── -->
+        <div class="charts-row">
+
+            <!-- Status breakdown -->
+            <div class="chart-card">
+                <h4 class="chart-title">Orders by Status</h4>
+                <div id="statusBars"></div>
+            </div>
+
+            <!-- Top models -->
+            <div class="chart-card">
+                <h4 class="chart-title">Top Car Models</h4>
+                <div id="modelBars"></div>
+            </div>
+
+        </div>
+
+        <!-- ── RECENT ORDERS TABLE ── -->
+        <div class="dash-section">
+            <h4 class="section-title">Recent Orders</h4>
+            <div id="recentOrdersWrap"></div>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <a href="/">Home</a>
+            <span class="site-footer-dot">·</span>
+            <a href="/products">Our Cars</a>
+            <span class="site-footer-dot">·</span>
+            <a href="/contact">Contact</a>
+            <p class="site-footer-copy">&copy; KABUUBI Industries</p>
+        </div>
+    </footer>
+
+    <script src="/js/dashboard.js"></script>
+
+</body>
+</html>
