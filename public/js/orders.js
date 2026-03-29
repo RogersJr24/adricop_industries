@@ -124,12 +124,28 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 
 // ─── SHOW / HIDE SCREENS ─────────────────────────
 
+function isAdminUser() {
+    return (
+        currentUser &&
+        String(currentUser.full_name || "").trim().toLowerCase() === "admin"
+    );
+}
+
+function updateDashboardNavLink() {
+    var dashLink = document.getElementById("dashboardLink");
+    if (!dashLink) {
+        return;
+    }
+    dashLink.style.display = isAdminUser() ? "list-item" : "none";
+}
+
 function showLoginScreen() {
     document.getElementById("loginScreen").style.display  = "flex";
     document.getElementById("ordersScreen").style.display = "none";
     document.getElementById("logoutBtn").style.display    = "none";
     document.getElementById("userGreeting").style.display = "none";
     document.getElementById("loginNavBtn").style.display  = "inline-block";  // ← add this
+    updateDashboardNavLink();
 }
 
 function showOrdersScreen() {
@@ -139,6 +155,7 @@ function showOrdersScreen() {
     document.getElementById("userGreeting").style.display = "inline";
     document.getElementById("userGreeting").innerHTML     = "Hello, <strong>" + currentUser.full_name + "</strong>";
     document.getElementById("loginNavBtn").style.display  = "none";   // ← add this
+    updateDashboardNavLink();
     loadOrders();
 }
 
@@ -256,8 +273,8 @@ function openCreateModal() {
     document.getElementById("orderFormOverlay").style.display = "flex";
 
     // Show status field only for admin
-    document.getElementById("statusField").style.display = currentUser.full_name === "admin" ? "block" : "none";
-    document.getElementById("f_status").value = o.status;
+    document.getElementById("statusField").style.display = isAdminUser() ? "block" : "none";
+    document.getElementById("f_status").value = "Pending";
 }
 
 
@@ -281,7 +298,7 @@ function openEditModal(id) {
     document.getElementById("f_status").value        = o.status;
 
     // Explicitly show OR hide — never leave it to chance
-    if (currentUser.full_name === "admin") {
+    if (isAdminUser()) {
         document.getElementById("statusField").style.display = "block";
     } else {
         document.getElementById("statusField").style.display = "none";
@@ -308,7 +325,7 @@ function openEditModal(id) {
 document.getElementById("saveOrderBtn").addEventListener("click", function () {
 
     // Add this with the other field values
-    const status = currentUser.full_name === "admin"
+    const status = isAdminUser()
         ? document.getElementById("f_status").value
         : orders.find(o => o.id == editingId)?.status || "Pending";
 
@@ -559,11 +576,4 @@ function loadCars() {
 
     });
 
-}
-
-// Show dashboard link only for admin
-const dashLink = document.getElementById("dashboardLink");
-if (dashLink) {
-    dashLink.style.display =
-        currentUser && currentUser.full_name === "admin" ? "list-item" : "none";
 }

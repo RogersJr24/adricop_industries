@@ -3,13 +3,19 @@
 let currentUser = JSON.parse(localStorage.getItem("ev_user")) || null;
 let allOrders   = [];
 
+function isAdminUser() {
+    return (
+        currentUser &&
+        String(currentUser.full_name || "").trim().toLowerCase() === "admin"
+    );
+}
 
 // ─── INIT ─────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", function () {
 
     // Not logged in or not admin — deny access
-    if (!currentUser || currentUser.full_name !== "admin") {
+    if (!currentUser || !isAdminUser()) {
         document.getElementById("accessDenied").style.display    = "flex";
         document.getElementById("dashboardScreen").style.display = "none";
         return;

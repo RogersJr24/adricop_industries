@@ -28,10 +28,13 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+function isAdminFullName(full_name) {
+    return String(full_name || "").trim().toLowerCase() === "admin";
+}
+
 app.get("/health", (req, res) => {
     res.status(200).type("text/plain").send("ok");
 });
-
 
 // ─── AUTH ────────────────────────────────────────
 
@@ -105,7 +108,7 @@ app.get("/api/orders", (req, res) => {
     let sql;
     let params;
 
-    if (full_name === "admin") {
+    if (isAdminFullName(full_name)) {
         sql = "SELECT orders.*, users.full_name FROM orders LEFT JOIN users ON orders.user_id = users.id ORDER BY orders.id DESC";
         params = [];
     } else {
